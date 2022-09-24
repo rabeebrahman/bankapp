@@ -18,18 +18,12 @@ psw=""
 
   ngOnInit(): void {
   }
-  acusrnoChange(event:any){
-    this.acusrno=event.target.value
-    console.log(this.acusrno);
+
+  login(a:any,b:any){
+ 
     
-  }
-  pswChange(event:any){
-    this.psw=event.target.value
-    console.log(this.psw);
-  }
-  login(){
-    var acnum=this.acusrno
-    var psw=this.psw
+    var acnum=a.value
+    var psw=b.value
     if(acnum in this.UserDeatils){
 if(psw==this.UserDeatils[acnum]["password"]){
   alert("login successfull")
@@ -41,7 +35,26 @@ else{
 }
     }
     else{
-      alert("wrong bitchez")
+      alert("Account Number doesnt Exist")
     }
   }
 }
+
+// login(){
+//   var acnum=this.acusrno
+//   var psw=this.psw
+//   if(acnum in this.UserDeatils){
+// if(psw==this.UserDeatils[acnum]["password"]){
+// alert("login successfull")
+
+
+// }
+// else{
+// alert("incorrect password")
+// }
+//   }
+//   else{
+//     alert("wrong bitchez")
+//   }
+// }
+// }

@@ -12,9 +12,9 @@
   <div class=" row container w-25 bg-transparent pt-5 mt-5 ps-5  rounded  ms-5">
     <h1 class="pt-5 pb-5">LOG IN</h1>
    
-    <input  type="text" [placeholder]="uplc" (change)="acusrnoChange($event)" class="form-control mb-2  " id="user1">
-    <input type="password" placeholder="Password" (change)="pswChange($event)" class="form-control mb-2" id="psw">
-    <button class="btn btn-primary mb-2" (click)="login()" type="button">Login</button>
+    <input  type="text" [placeholder]="uplc" #acno class="form-control mb-2  " id="user1">
+    <input type="password" placeholder="Password" #psw class="form-control mb-2" id="psw">
+    <button class="btn btn-primary mb-2" (click)="login(acno,psw)" type="button">Login</button>
 
 </div>   
 
