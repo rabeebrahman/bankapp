@@ -1,0 +1,20 @@
+   
+  <nav class="navbar bg-transparent">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+    
+        MDBC BANK
+      </a>
+    </div>
+
+  </nav>   
+  <div class="text-white ms-5 p-3"><h5>{{aim}}</h5></div>
+  <div class=" row container w-25 bg-transparent pt-5 mt-5 ps-5  rounded  ms-5">
+    <h1 class="pt-5 pb-5">LOG IN</h1>
+   
+    <input  type="text" [placeholder]="uplc" (change)="acusrnoChange($event)" class="form-control mb-2  " id="user1">
+    <input type="password" placeholder="Password" (change)="pswChange($event)" class="form-control mb-2" id="psw">
+    <button class="btn btn-primary mb-2" (click)="login()" type="button">Login</button>
+
+</div>   
+
