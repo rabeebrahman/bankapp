@@ -2,10 +2,10 @@
   <div class=" row container w-25 bg-transparent pt-5 mt-5 ps-5  rounded  ms-5">
     <h1 class="pt-5 pb-5">Register</h1>
    
-    <form (ngSubmit)="register()">
-      <input name="username"  type="text" placeholder="Username" [(ngModel)]="uname" class="form-control mb-2  " id="uname">
-      <input type="text" placeholder="Account Number" [(ngModel)]="acno" class="form-control mb-2" id="acno">
-      <input type="password" placeholder="Password" [(ngModel)]="pswd" class="form-control mb-2" id="pswd">
+    <form (ngSubmit)="register()" [formGroup]="registerForm">
+      <input name="username"  type="text" placeholder="Username" formControlName="uname" class="form-control mb-2  " id="uname">
+      <input type="text" placeholder="Account Number" formControlName="acno" class="form-control mb-2" id="acno">
+      <input type="password" placeholder="Password" formControlName="pswd" class="form-control mb-2" id="pswd">
       <button class="btn btn-primary mb-2"  type="submit">REGISTER</button>
     
 
