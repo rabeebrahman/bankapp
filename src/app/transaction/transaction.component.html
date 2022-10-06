@@ -1,0 +1,28 @@
+<div>
+    <h1 class=" mt-5 pt-5 text-center text-dark">Transaction Details</h1>
+</div>
+
+
+
+
+<div class="container w-50 mt-5">
+    <table class="table table-bordered table-dark table-responsive table-hover text-center">
+       
+            <thead>
+          
+            </thead>
+            <th class="text-dark">TYPE</th>
+            
+            <th class="text-dark"> AMOUNT</th>
+            <tbody>
+              <tr class="table-active">
+            
+               
+                                <tr *ngFor="let i of transaction"> <td>{{i.type}}</td>
+                                    <td>{{i.amount}}</td></tr>
+             
+            </tbody>
+          </table>
+
+</div>  
+<a routerLink="/dashboard">GO TO DASHBOARD</a>
