@@ -11,10 +11,12 @@
   <div class="text-white ms-5 p-3"><h5>{{aim}}</h5></div>
   <div class=" row container w-25 bg-transparent pt-5 mt-5 ps-5  rounded  ms-5">
     <h1 class="pt-5 pb-5">LOG IN</h1>
-   <form (ngSubmit)="login()">
+   <form (ngSubmit)="login()" [formGroup]="loginForm">
      
-      <input  type="text" name="uuu" [placeholder]=acursno [(ngModel)]="uplc" class="form-control mb-2  " id="user1">
-      <input type="password" name="wow" placeholder="Password" [(ngModel)]="psw" class="form-control mb-2" id="psws">
+      <input  type="text" name="uuu" [placeholder]=acursno formControlName="uplc" class="form-control mb-2  " id="user1">
+      <div *ngIf="this.loginForm.get('uplc')?.errors&&this.loginForm.get('uplc')?.touched"><p class="text-danger">*Invalid Account Number</p></div>
+      <input type="password" name="wow" placeholder="Password" formControlName="psw" class="form-control mb-2" id="psws">
+      <div *ngIf="this.loginForm.get('psw')?.errors&&this.loginForm.get('psw')?.touched"><p class="text-danger">*Invalid Password</p></div>
       <button class="btn btn-primary mb-2"  type="submit">Login</button>
    </form>
     <div><a routerLink="register">NewUser?</a></div>

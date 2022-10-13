@@ -12,7 +12,32 @@ export class DataService {
   ,1002:{acono:1002,username:"amal",password:"123",balance:"4500",transaction:[]}
   ,1003:{acono:1003 ,username:"suresh",password:"123",balance:"39000",transaction:[]}}
 
-  constructor() { }
+  constructor() {this.getDetails() }
+   saveDetails(){
+    if(this.UserDeatils)
+  {
+    localStorage.setItem('database',JSON.stringify(this.UserDeatils))
+  }
+  if(this.currentuser)
+  {
+    localStorage.setItem('currentUser',JSON.stringify(this.currentuser))
+  }
+  if(this.currentacno)
+  {
+    localStorage.setItem('currentAcno',JSON.stringify(this.currentacno))
+  }
+}
+getDetails(){
+  if(localStorage.getItem('database')){
+    this.UserDeatils=JSON.parse(localStorage.getItem('database') || '' )
+  }
+  if(localStorage.getItem('currentUser')){
+    this.currentuser=JSON.parse(localStorage.getItem('currentUser') || '' )
+  }
+  if(localStorage.getItem('currentAcno')){
+    this.currentacno=JSON.parse(localStorage.getItem('currentAcno') || '' )
+  }
+}
 register(acnum:any,username:any,password:any){
 
 //   var uname=this.uname
@@ -25,8 +50,9 @@ if(acnum in UserDeatils){
 
 
   else{
-    UserDeatils[acnum]={acnum,username,password,balance:0}
-  return true
+    UserDeatils[acnum]={acnum,username,password,balance:0,transaction:[]}
+  this.saveDetails()
+    return true
   }
 }
 login(acnum:any,psw:any){
@@ -37,6 +63,7 @@ login(acnum:any,psw:any){
 if(psw==this.UserDeatils[acnum]["password"]){
   this.currentuser=UserDeatils[acnum]['username']
   this.currentacno=acnum
+  this.saveDetails()
 return true
 //redirection
 
@@ -59,6 +86,7 @@ deposit(acnum:any,psw:any,amnt:any){
     {
       UserDeatils[acnum]['balance']+=amount
       UserDeatils[acnum]['transaction'].push({type:'CREDIT',amount})
+      this.saveDetails()
       return UserDeatils[acnum]['balance']
     }
     else{
@@ -80,6 +108,7 @@ withdraw(acnum: any, pswrd1: any, amnt1: any) {
       if (userDetails[acnum]['balance'] >= amount) {
         userDetails[acnum]['balance'] -= amount
         userDetails[acnum]['transaction'].push({ type: 'DEBIT', amount })
+        this.saveDetails()
         return userDetails[acnum]['balance']
       }
       else {

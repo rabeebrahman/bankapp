@@ -12,33 +12,39 @@
         <li class="nav-item">
           <a class="nav-link text-white" routerLink="/transaction">View Transaction history</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">Pricing</a>
-        </li>
+       <button class="btn btn-outline-warning" type="button" (click)="logOut()">LOGOUT</button>
+       <button class="btn btn-outline-danger ms-2" type="button" (click)="delete()">Delete</button>
        
       </ul>
     </div>
   </div>
 </nav>
+<div> <app-deleteconfirm (oncancel)="onCancel()" [item]="acnum"></app-deleteconfirm> <div>
 <h1  class= "text-center">Welcome {{dashh}}</h1>
 
 
-<div class="container w-25  border rounded">
+<div [ngClass]="acnum?'style1':'' " class="container w-25  border rounded">
     <h1>Deposit Form</h1>
-    <form (ngSubmit)="deposit()">
+    <form  (ngSubmit)="deposit()" [formGroup]="depositForm">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Account Number</label>
-            <input type="text" name="acnome" class="form-control" [(ngModel)]="acnum" id="acnooo" aria-describedby="emailHelp">
+            <input type="text" name="acnome" class="form-control" formControlName="acnum" id="acnooo" aria-describedby="emailHelp">
+            <div *ngIf="this.depositForm.get('acnum')?.errors&&this.depositForm.get('acnum')?.touched"><p class="text-danger">*Invalid Account Number</p></div>
+
           </div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Amount</label>
-          <input type="text" name="ammount" [(ngModel)]="amnt" class="form-control" id="amttt" aria-describedby="emailHelp">
+          <input type="text" name="ammount" formControlName="amnt" class="form-control" id="amttt" aria-describedby="emailHelp">
+          <div *ngIf="this.depositForm.get('amnt')?.errors&&this.depositForm.get('amnt')?.touched"><p class="text-danger">*Invalid Amount</p></div>
+
           
         </div>
     
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" name="pss" class="form-control" [(ngModel)]="psw" id="passw">
+          <input type="password" name="pss" class="form-control" formControlName="psw" id="passw">
+          <div *ngIf="this.depositForm.get('psw')?.errors&&this.depositForm.get('psw')?.touched"><p class="text-danger">*Invalid Password</p></div>
+
         </div>
        
         <button type="submit" class="btn btn-primary">Deposit</button>
@@ -46,25 +52,31 @@
 
 </div>
 
-<div class="container w-25 mt-3 border rounded">
+<div [ngClass]="acnum?'style1':'' " class="container w-25 mt-3 border rounded">
     <h1>Withdrawal Form</h1>
-    <form (ngSubmit)="withdraw()">
+    <form [ngClass]="acnum?'style1':'' " (ngSubmit)="withdraw()" [formGroup]="withdrawForm">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Account Number</label>
-            <input type="text" name="cca" class="form-control" [(ngModel)]="acnum1" id="acno11" aria-describedby="emailHelp">
+            <input type="text" name="cca" class="form-control" formControlName="acnum1" id="acno11" aria-describedby="emailHelp">
+            <div *ngIf="this.withdrawForm.get('acnum1')?.errors&&this.withdrawForm.get('acnum1')?.touched"><p class="text-danger">*Invalid Account Number</p></div>
           </div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Amount</label>
-          <input type="text" name="aammnt" [(ngModel)]="amnt1" class="form-control" id="amtt1" aria-describedby="emailHelp">
+          <input type="text" name="aammnt"formControlName="amnt1" class="form-control" id="amtt1" aria-describedby="emailHelp">
+          <div *ngIf="this.withdrawForm.get('amnt1')?.errors&&this.withdrawForm.get('amnt1')?.touched"><p class="text-danger">*Invalid Amount</p></div>
+
           
         </div>
     
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" name="psswer" class="form-control" [(ngModel)]="psw1" id="pswde">
+          <input type="password" name="psswer" class="form-control" formControlName="psw1" id="pswde">
+          <div *ngIf="this.withdrawForm.get('psw1')?.errors&&this.withdrawForm.get('psw1')?.touched"><p class="text-danger">*Invalid Password</p></div>
+
         </div>
        
         <button type="submit" class="btn btn-primary">Withdraw</button>
       </form>
+     
 </div>
 

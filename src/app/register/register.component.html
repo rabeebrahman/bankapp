@@ -1,11 +1,15 @@
 
   <div class=" row container w-25 bg-transparent pt-5 mt-5 ps-5  rounded  ms-5">
     <h1 class="pt-5 pb-5">Register</h1>
+    <!-- *ng if for condition -->
    
     <form (ngSubmit)="register()" [formGroup]="registerForm">
       <input name="username"  type="text" placeholder="Username" formControlName="uname" class="form-control mb-2  " id="uname">
+      <div *ngIf="this.registerForm.get('uname')?.errors&&this.registerForm.get('uname')?.touched"><p class="text-danger">*Invalid Username</p></div>
       <input type="text" placeholder="Account Number" formControlName="acno" class="form-control mb-2" id="acno">
+      <div *ngIf="this.registerForm.get('acno')?.errors&&this.registerForm.get('acno')?.touched"><p class="text-danger">*Invalid Account Number</p></div>
       <input type="password" placeholder="Password" formControlName="pswd" class="form-control mb-2" id="pswd">
+      <div *ngIf="this.registerForm.get('pswd')?.errors&&this.registerForm.get('pswd')?.touched"><p class="text-danger">*Invalid Password</p></div>
       <button class="btn btn-primary mb-2"  type="submit">REGISTER</button>
     
 
