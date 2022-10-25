@@ -10,6 +10,7 @@ export class DeleteconfirmComponent implements OnInit {
   @Input()item:string | undefined
   constructor() { }
   @Output() oncancel=new EventEmitter() //used to create user defined events 
+  @Output() ondelete=new EventEmitter()
                  
 
   ngOnInit(): void {
@@ -18,6 +19,10 @@ export class DeleteconfirmComponent implements OnInit {
   cancel(){
     this.oncancel.emit()
   
+  }
+  delete(){
+    this.ondelete.emit(this.item)
+    
   }
 
 }

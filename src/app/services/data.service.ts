@@ -1,5 +1,6 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+const options={headers:new HttpHeaders()}
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,7 @@ export class DataService {
   ,1002:{acono:1002,username:"amal",password:"123",balance:"4500",transaction:[]}
   ,1003:{acono:1003 ,username:"suresh",password:"123",balance:"39000",transaction:[]}}
 
-  constructor() {this.getDetails() }
+  constructor(private http:HttpClient) {this.getDetails() }
    saveDetails(){
     if(this.UserDeatils)
   {
@@ -39,93 +40,43 @@ getDetails(){
   }
 }
 register(acnum:any,username:any,password:any){
-
-//   var uname=this.uname
-// var pswd=this.pswd   for ref
-// var acno=this.acno
-let UserDeatils=this.UserDeatils
-if(acnum in UserDeatils){
-  return false // cause we use dis to return to regis.ts
-}
-
-
-  else{
-    UserDeatils[acnum]={acnum,username,password,balance:0,transaction:[]}
-  this.saveDetails()
-    return true
-  }
+  const data={acno:acnum,username,password}
+return this.http.post('http://localhost:3006/register',data)
 }
 login(acnum:any,psw:any){
-  let UserDeatils=this.UserDeatils
- 
-
-  if(acnum in this.UserDeatils){
-if(psw==this.UserDeatils[acnum]["password"]){
-  this.currentuser=UserDeatils[acnum]['username']
-  this.currentacno=acnum
-  this.saveDetails()
-return true
-//redirection
-
+  const data={acnum,psw}
+  return this.http.post('http://localhost:3006/login',data)
 }
-else{
-alert("incorrect password")
-return false
-}
+getToken(){
+  // fetch the token from the local storage
+  const token=JSON.parse(localStorage.getItem('token') || '' )
+  //1.append token inside headers
+  //1.2 create headers
+  let headers=new HttpHeaders()
+  //1.3 append token to header
+  if(token){
+    options.headers=headers.append('token1',token)
   }
-  else{
-    alert("user doesnt exisit")
-    return false
-  }
+return options
+
 }
 deposit(acnum:any,psw:any,amnt:any){
-  let UserDeatils=this.UserDeatils
-  var amount=parseInt(amnt) //to cov string to int casuse we taking input frm 
-  if(acnum in UserDeatils){
-    if(psw==UserDeatils[acnum]["password"])
-    {
-      UserDeatils[acnum]['balance']+=amount
-      UserDeatils[acnum]['transaction'].push({type:'CREDIT',amount})
-      this.saveDetails()
-      return UserDeatils[acnum]['balance']
-    }
-    else{
-      alert('incorrect password')
-    }
+  const data={acnum,pswrd:psw,amnt}
+  return this.http.post('http://localhost:3006/deposit',data,this.getToken())
   }
-  else{
-    alert('incorrect Account number')
-    return false
-}}
 
 
 
 withdraw(acnum: any, pswrd1: any, amnt1: any) {
-  let userDetails = this.UserDeatils
-  var amount = parseInt(amnt1)
-  if (acnum in userDetails) {
-    if (pswrd1 == userDetails[acnum]['password']) {
-      if (userDetails[acnum]['balance'] >= amount) {
-        userDetails[acnum]['balance'] -= amount
-        userDetails[acnum]['transaction'].push({ type: 'DEBIT', amount })
-        this.saveDetails()
-        return userDetails[acnum]['balance']
-      }
-      else {
-        alert('insufficient balance')
-
-      }
-    }
-    else {
-      alert('incorrect password')
-    }
-  }
-  else {
-    alert('user not exist')
-    return false
-  }
+  const data={acnum,pswrd1,amnt1}
+  return this.http.post('http://localhost:3006/withdraw',data,this.getToken())
 }
 getTransaction(acno:any){
-  return this.UserDeatils[acno]['transaction']
+  const data={acno}
+  return this.http.post('http://localhost:3006/transaction',data,this.getToken())
+}
+
+deleteAcc(acno:any){
+  return this.http.delete('http://localhost:3006/deleteacc/'+acno)
 }
 }

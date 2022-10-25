@@ -56,13 +56,20 @@ login(){
   var acnum=this.loginForm.value.uplc
   var psw=this.loginForm.value.psw
   
-  const result=this.ds.login(acnum,psw)
-  if(this.loginForm.valid){
-    if(result){
-      alert('login sucessfull')
-    this.router.navigateByUrl('dashboard')
-    }
 
+  if(this.loginForm.valid){
+  this.ds.login(acnum,psw).subscribe((result:any)=>{
+   localStorage.setItem('currentUser',JSON.stringify(result.currentUser))
+   localStorage.setItem('currentAcno',JSON.stringify(result.currentAcno))
+   localStorage.setItem('token',JSON.stringify(result.token))
+    alert(result.message)
+    this.router.navigateByUrl('/dashboard')}
+    ,result=>{alert(result.error.message)})
+    
+
+  }
+  else{
+    alert('invalid form')
   }
   
 }}

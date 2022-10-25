@@ -30,17 +30,16 @@ export class RegisterComponent implements OnInit {
 var uname=this.registerForm.value.uname
 var pswd=this.registerForm.value.pswd
 var acno=this.registerForm.value.acno
-const result=this.ds.register(acno,uname,pswd)
+
+
+
+
+
 if(this.registerForm.valid){
-
-if(result){
-  alert("Registered ")
-  this.router.navigateByUrl('')
-}
-else{
-  alert("user already exist")
-}
-
+this.ds.register(acno,uname,pswd).subscribe((result:any)=>{
+alert(result.message)
+this.router.navigateByUrl('')}
+,result=>{alert(result.error.message)})
 
 }
 // let UserDeatils=this.ds.UserDeatils

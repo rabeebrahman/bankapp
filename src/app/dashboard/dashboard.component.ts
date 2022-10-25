@@ -27,13 +27,16 @@ depositForm=this.fb.group({
 })
 
 
-  constructor(private ds:DataService,private fb:FormBuilder,private router:Router) { 
-    this.dashh=this.ds.currentuser
+  constructor(private ds:DataService,private fb:FormBuilder,private router:Router) 
+  { 
+    if(localStorage.getItem('currentUser')){
+    this.dashh=JSON.parse(localStorage.getItem('currentUser') || " ")
+    }
     this.sdate=Date
   }
 
   ngOnInit(): void {
-    if(!localStorage.getItem('currentAcno')){
+    if(!localStorage.getItem('token')){
       alert('please login first')
       this.router.navigateByUrl('')
     }
@@ -44,15 +47,22 @@ depositForm=this.fb.group({
  var acnum2=this.depositForm.value.acnum
  var amnt2=this.depositForm.value.amnt
  var psw2=this.depositForm.value.psw
+ if(this.depositForm.valid){
 
- const result=this.ds.deposit(acnum2,psw2,amnt2)
- if(result){
-  alert(`${amnt2}is credited,new balance is ${result}`)
- }
-  }
+this.ds.deposit(acnum2,psw2,amnt2).subscribe((result:any)=>{
+  alert(result.message)
+},result=>{alert(result.error.message)})
+  
+}
+  // let UserDeatils=this.ds.UserDeatils
+  else{
+    alert("invalid form")
+  }}
+  
   logOut(): void{
     localStorage.removeItem('currentUser')
     localStorage.removeItem('currentAcno')
+    localStorage.removeItem('token')
     this.router.navigateByUrl('')
   
   }
@@ -62,15 +72,29 @@ depositForm=this.fb.group({
   onCancel(){
     this.acnum=""
   }
+  ondelete(event:any){
+    // alert(event)
+    this.ds.deleteAcc(event).subscribe((result:any)=>{
+      alert(result.message)
+      this.logOut()
+      // this.router.navigateByUrl('')
+    },result=>{alert(result.error.message)})
+  }
 
   withdraw(): void{
     var acnum3=this.withdrawForm.value.acnum1
     var amnt3=this.withdrawForm.value.amnt1
     var psw3=this.withdrawForm.value.psw1
-    const result=this.ds.withdraw(acnum3,psw3,amnt3)
-    if(result){
-      alert(`${amnt3}is Debited,new balance is ${result}`)
-     }
+    if(this.withdrawForm.valid){
+this.ds.withdraw(acnum3,psw3,amnt3).subscribe((result:any)=>{
+  alert(result.message)
+},result=>{alert(result.error.message)})
+  
+   
   }
+  else{
+    alert("invalid form")
+  }}
 
 }
+

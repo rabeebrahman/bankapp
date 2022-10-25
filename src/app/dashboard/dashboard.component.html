@@ -19,7 +19,7 @@
     </div>
   </div>
 </nav>
-<div> <app-deleteconfirm (oncancel)="onCancel()" [item]="acnum"></app-deleteconfirm> <div>
+<div> <app-deleteconfirm (oncancel)="onCancel()" (ondelete)="ondelete($event)" [item]="acnum"></app-deleteconfirm> <div>
 <h1  class= "text-center">Welcome {{dashh}}</h1>
 
 

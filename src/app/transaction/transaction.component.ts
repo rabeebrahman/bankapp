@@ -10,8 +10,10 @@ export class TransactionComponent implements OnInit {
 cacnum:any
 transaction:any
   constructor(private ds:DataService) {
-    this.cacnum=this.ds.currentacno
-    this.transaction=this.ds.getTransaction(this.cacnum)
+    this.cacnum=JSON.parse(localStorage.getItem('currentAcno') || " ")
+  this.ds.getTransaction(this.cacnum).subscribe((result:any)=>{
+    this.transaction=result.transaction
+  },result=>{alert(result.error.message)})
   }
 
   ngOnInit(): void {
